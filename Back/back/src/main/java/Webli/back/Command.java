@@ -45,23 +45,17 @@ public class Command {
 	}
 	
 	public JSONObject runCommand() {
-		
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command(BASH_ENVIRONMENT, this.command);
 		try {
-
 			Process process = processBuilder.start();
-
 			StringBuilder output = new StringBuilder();
-
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(process.getInputStream()));
-
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				output.append(line + "\n");
 			}
-			this.result = stringBuildertoJson(output);
+			this.setResult(stringBuildertoJson(output));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
