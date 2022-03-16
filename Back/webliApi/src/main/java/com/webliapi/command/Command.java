@@ -1,4 +1,4 @@
-package Webli.back;
+package com.webliapi.command;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Command {
 	public Command(EnumToolsName tools, String command) {
 		this.tools = tools;
 		this.command = command;
-		this.result = null;
+		this.result = runCommand();
 	}
 	
 	public EnumToolsName getTools() {
