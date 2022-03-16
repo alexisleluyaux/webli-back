@@ -15,6 +15,7 @@ const router = require('express').Router();
 
 const { exec } = require("child_process");
 const fs = require('fs');
+const { stdout } = require('process');
 
 // Connection à la base de donnée
 
@@ -65,11 +66,12 @@ app.post(config.rootAPI + '/john', (req, res) => {
           return;
         }
         console.log(`stdout: ${stdout}`);
+        res.send(stdout);
       });
     }
     
   });
-  console.log(req.body)
+  
 })
 
 //delete user
