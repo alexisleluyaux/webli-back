@@ -56,7 +56,7 @@ app.post(config.rootAPI + '/john', (req, res) => {
     if(err){
       console.log('Erreur création de fichier : ', err);
     } else {
-      exec("ls -a ", (error, stdout, stderr) => {
+      exec("john ./tmp/johnhash.txt ", (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
           return;
