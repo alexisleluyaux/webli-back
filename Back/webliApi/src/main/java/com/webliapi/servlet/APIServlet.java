@@ -67,7 +67,7 @@ public class APIServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String command = new JSONObject(request.getParameter("command")).getString("command");
         Command kaliTool = new Command(EnumToolsName.JOHN_THE_REAPER, command);
-        out.print(kaliTool.getResult());
+        out.print(kaliTool.runCommand());
         out.flush();
         
     }
