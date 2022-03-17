@@ -176,6 +176,26 @@ app.post(config.rootAPI + '/ddos', (req, res) => {
   });
 })
 
+//post url extractor ip/domain
+
+app.post(config.rootAPI + '/urlextractor', (req, res) => {
+  console.log('Commande à executer: ', `/home/webli-back/URLextract/URLextractor/extractor.sh ${req.body.ipOrDomain}`)
+  exec(`/home/webli-back/URLextract/URLextractor/extractor.sh ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+    if (error) {
+      console.log('Error: ', error.message)
+      res.send(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      res.send(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`Resp: ${stdout}`);
+    res.send(stdout);
+  });
+})
+
 // Démarrage de l'application
 
 app.listen(config.port, () => console.log(`App running on port ${config.port}!`))
