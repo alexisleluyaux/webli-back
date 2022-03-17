@@ -24,6 +24,10 @@ console.log('Connected')
 
 const app = express()
 
+ValidIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
+ValidHostnameRegex = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$";
+const regexIpDetector = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
+
 
 app.set('Secret', config.secret)
 
@@ -40,14 +44,6 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
-
-
-
-//get user
-
-app.get(config.rootAPI + 'get/user', (req, res) => {
-
-})
 
 //post john hash
 
@@ -179,8 +175,18 @@ app.post(config.rootAPI + '/ddos', (req, res) => {
 //post url extractor ip/domain
 
 app.post(config.rootAPI + '/urlextractor', (req, res) => {
-  console.log('Commande à executer: ', `/URLextract/URLextractor/extractor.sh ${req.body.ipOrDomain}`)
-  exec(`/URLextract/URLextractor/extractor.sh ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
+  let matchIpReggex = req.body.match(ValidIpAddressRegex)
+  let isAnIpAdress = regexIpDetector.test(matchIpReggex)
+  let ipOrDomain = ''
+  if(isAnIpAdress){
+    ipOrDomain= matchIpReggex
+  }
+  else{
+    ipOrDomain= matchDomainReggex
+  }
+  console.log('Commande à executer: ', `/URLextract/URLextractor/extractor.sh ${ipOrDomain}`)
+  exec(`cd /home/webli-back/URLextract/URLextractor/ ; ./extractor.sh ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
