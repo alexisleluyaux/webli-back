@@ -120,7 +120,7 @@ app.post(config.rootAPI + '/sqlmap', (req, res) => {
 
 app.post(config.rootAPI + '/dnsscan', (req, res) => {
   console.log('Commande à executer: ', `dnsenum ${req.body.ipOrDomain}`)
-  exec(`dnsenum ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  exec(`dig ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
