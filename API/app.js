@@ -86,9 +86,8 @@ app.post(config.rootAPI + '/nmap', (req, res) => {
           res.send(`stderr: ${stderr}`);
           return;
         }
-        let response = stdout.match('$1 ~ /^[0-9]/')
-        console.log(`Resp: ${response}`);
-        res.send(response);
+        console.log(`Resp: ${stdout}`);
+        res.send(stdout);
       });
 })
 
