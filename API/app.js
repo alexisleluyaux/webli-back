@@ -160,7 +160,7 @@ app.post(config.rootAPI + '/wpscan', (req, res) => {
 
 app.post(config.rootAPI + '/ddos', (req, res) => {
   console.log('Commande à executer: ', `wpscan --url ${req.body.ipOrDomain}`)
-  exec(`hping3 -i u1 -S -p 80 -c 50 ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  exec(`hping3 -i u1 -S -p 80 -c 5000 ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
