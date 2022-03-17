@@ -59,10 +59,12 @@ app.post(config.rootAPI + '/john', (req, res) => {
       exec("john ./tmp/johnhash.txt ", (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
+          res.send(`error: ${error.message}`);
           return;
         }
         if (stderr) {
           console.log(`stderr: ${stderr}`);
+          res.send(`stderr: ${stderr}`);
           return;
         }
         console.log(`stdout: ${stdout}`);
@@ -79,10 +81,12 @@ app.post(config.rootAPI + '/john', (req, res) => {
 app.post(config.rootAPI + '/nmap', (req, res) => {
       exec(`nmap -T4 -A -v ${req.body.ipOrDomain}| awk '$1 ~ /^[0-9]/'`, (error, stdout, stderr) => {
         if (error) {
+          console.log('Error: ', error.message)
           res.send(`error: ${error.message}`);
           return;
         }
         if (stderr) {
+          console.log(`stderr: ${stderr}`);
           res.send(`stderr: ${stderr}`);
           return;
         }
@@ -96,10 +100,12 @@ app.post(config.rootAPI + '/nmap', (req, res) => {
 app.post(config.rootAPI + '/sqlmap', (req, res) => {
   exec(`sqlmap -u ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
+      console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
       return;
     }
     if (stderr) {
+      console.log(`stderr: ${stderr}`);
       res.send(`stderr: ${stderr}`);
       return;
     }
@@ -113,10 +119,12 @@ app.post(config.rootAPI + '/sqlmap', (req, res) => {
 app.post(config.rootAPI + '/dnsscan', (req, res) => {
   exec(`dnsrecon -d ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
+      console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
       return;
     }
     if (stderr) {
+      console.log(`stderr: ${stderr}`);
       res.send(`stderr: ${stderr}`);
       return;
     }
@@ -130,10 +138,12 @@ app.post(config.rootAPI + '/dnsscan', (req, res) => {
 app.post(config.rootAPI + '/wpscan', (req, res) => {
   exec(`wpscan --url ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
+      console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
       return;
     }
     if (stderr) {
+      console.log(`stderr: ${stderr}`);
       res.send(`stderr: ${stderr}`);
       return;
     }
