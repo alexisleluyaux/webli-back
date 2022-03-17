@@ -79,6 +79,7 @@ app.post(config.rootAPI + '/john', (req, res) => {
 //post nmap ip/domain
 
 app.post(config.rootAPI + '/nmap', (req, res) => {
+  console.log('Commande à executer: ', `nmap -T4 -A -v ${req.body.ipOrDomain}| awk '$1 ~ /^[0-9]/'`)
       exec(`nmap -T4 -A -v ${req.body.ipOrDomain}| awk '$1 ~ /^[0-9]/'`, (error, stdout, stderr) => {
         if (error) {
           console.log('Error: ', error.message)
@@ -98,6 +99,7 @@ app.post(config.rootAPI + '/nmap', (req, res) => {
 //post sqlmap ip/domain
 
 app.post(config.rootAPI + '/sqlmap', (req, res) => {
+  console.log('Commande à executer: ', `sqlmap -u ${req.body.ipOrDomain}`)
   exec(`sqlmap -u ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
@@ -117,7 +119,8 @@ app.post(config.rootAPI + '/sqlmap', (req, res) => {
 //post dnsscan ip/domain
 
 app.post(config.rootAPI + '/dnsscan', (req, res) => {
-  exec(`dnsrenum ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  console.log('Commande à executer: ', `dnsenum ${req.body.ipOrDomain}`)
+  exec(`dnsenum ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
@@ -136,6 +139,7 @@ app.post(config.rootAPI + '/dnsscan', (req, res) => {
 //post wpscan ip/domain
 
 app.post(config.rootAPI + '/wpscan', (req, res) => {
+  console.log('Commande à executer: ', `wpscan --url ${req.body.ipOrDomain}`)
   exec(`wpscan --url ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
