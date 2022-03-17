@@ -91,21 +91,56 @@ app.post(config.rootAPI + '/nmap', (req, res) => {
       });
 })
 
-//delete user
+//post sqlmap ip/domain
 
-app.delete(config.rootAPI + 'delete/user', (req, res) => {
-
+app.post(config.rootAPI + '/sqlmap', (req, res) => {
+  exec(`sqlmap -u ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+    if (error) {
+      res.send(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      res.send(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`Resp: ${stdout}`);
+    res.send(stdout);
+  });
 })
 
-//update user
+//post dnsscan ip/domain
 
-app.patch(config.rootAPI + 'update/user', (req, res) => {
-  console.log(req.body)
+app.post(config.rootAPI + '/dnsscan', (req, res) => {
+  exec(`dnsrecon -d ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+    if (error) {
+      res.send(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      res.send(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`Resp: ${stdout}`);
+    res.send(stdout);
+  });
 })
 
+//post wpscan ip/domain
 
-
-
+app.post(config.rootAPI + '/dnsscan', (req, res) => {
+  exec(`wpscan --url ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+    if (error) {
+      res.send(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      res.send(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`Resp: ${stdout}`);
+    res.send(stdout);
+  });
+})
 
 // Démarrage de l'application
 
