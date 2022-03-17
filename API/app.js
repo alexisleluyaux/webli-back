@@ -127,7 +127,7 @@ app.post(config.rootAPI + '/dnsscan', (req, res) => {
 
 //post wpscan ip/domain
 
-app.post(config.rootAPI + '/dnsscan', (req, res) => {
+app.post(config.rootAPI + '/wpscan', (req, res) => {
   exec(`wpscan --url ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       res.send(`error: ${error.message}`);
