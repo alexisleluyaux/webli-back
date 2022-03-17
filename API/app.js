@@ -117,7 +117,7 @@ app.post(config.rootAPI + '/sqlmap', (req, res) => {
 //post dnsscan ip/domain
 
 app.post(config.rootAPI + '/dnsscan', (req, res) => {
-  exec(`dnsrecon -d ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  exec(`dnsrenum ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
