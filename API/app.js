@@ -77,7 +77,7 @@ app.post(config.rootAPI + '/john', (req, res) => {
 //post nmap ip/domain
 
 app.post(config.rootAPI + '/nmap', (req, res) => {
-      exec(`nmap -T4 -A -v ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+      exec(`nmap -T4 -A -v ${req.body.ipOrDomain}| awk '$1 ~ /^[0-9]/'`, (error, stdout, stderr) => {
         if (error) {
           res.send(`error: ${error.message}`);
           return;
