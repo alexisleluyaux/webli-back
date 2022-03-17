@@ -25,7 +25,7 @@ console.log('Connected')
 const app = express()
 
 ValidIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
-ValidHostnameRegex = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$";
+ValidHostnameRegex = "^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$";
 const regexIpDetector = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/gi;
 
 
@@ -177,13 +177,25 @@ app.post(config.rootAPI + '/ddos', (req, res) => {
 app.post(config.rootAPI + '/urlextractor', (req, res) => {
   let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
   let matchIpReggex = req.body.match(ValidIpAddressRegex)
-  let isAnIpAdress = regexIpDetector.test(matchIpReggex)
-  let ipOrDomain = ''
-  if(isAnIpAdress){
-    ipOrDomain= matchIpReggex
+  let isAValidIpOrDomain = true
+  if(matchDomainReggex === null && matchIpReggex === null){
+    isAValidIpOrDomain= false
+  }
+  if(isAValidIpOrDomain){
+    let isAnIpAdress = false
+    if(matchIpReggex!==null){
+      isAnIpAdress = regexIpDetector.test(matchIpReggex)
+    }
+    let ipOrDomain = ''
+    if(isAnIpAdress){
+      ipOrDomain= matchIpReggex
+    }
+    else{
+      ipOrDomain= matchDomainReggex
+    }
   }
   else{
-    ipOrDomain= matchDomainReggex
+    res.send('Neither Ipv4 IP Adress or hostname detected.')
   }
   console.log('Commande à executer: ', `/URLextract/URLextractor/extractor.sh ${ipOrDomain}`)
   exec(`cd /home/webli-back/URLextract/URLextractor/ ; ./extractor.sh ${ipOrDomain}`, (error, stdout, stderr) => {
