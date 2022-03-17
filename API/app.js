@@ -49,7 +49,7 @@ app.get(config.rootAPI + 'get/user', (req, res) => {
 
 })
 
-//post user
+//post john hash
 
 app.post(config.rootAPI + '/john', (req, res) => {
   fs.writeFile("./tmp/johnhash.txt", req.body.hash, function(err){
@@ -72,6 +72,23 @@ app.post(config.rootAPI + '/john', (req, res) => {
     
   });
   
+})
+
+//post nmap ip/domain
+
+app.post(config.rootAPI + '/nmap', (req, res) => {
+      exec(`nmap -T4 -A -v ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+        if (error) {
+          res.send(`error: ${error.message}`);
+          return;
+        }
+        if (stderr) {
+          res.send(`stderr: ${stderr}`);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+        res.send(stdout);
+      });
 })
 
 //delete user
