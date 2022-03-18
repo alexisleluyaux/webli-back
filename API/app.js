@@ -310,8 +310,8 @@ app.post(config.rootAPI + '/urlextractor', (req, res) => {
     res.send('Neither Ipv4 IP Adress or hostname detected.')
     return;
   }
-  console.log('Commande à executer: ', `cd /home/webli-back/URLextract/URLextractor/ | ./extractor.sh ${ipOrDomain}`)
-  exec(`cd /home/webli-back/URLextract/URLextractor/ | ./extractor.sh ${ipOrDomain}`, (error, stdout, stderr) => {
+  console.log('Commande à executer: ', `cd /home/webli-back/URLextract/URLextractor/ && ./extractor.sh ${ipOrDomain}`)
+  exec(`cd /home/webli-back/URLextract/URLextractor/ && ./extractor.sh ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
