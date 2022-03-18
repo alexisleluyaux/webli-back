@@ -1,6 +1,6 @@
 # API
 
-This API was create in node.js.
+This API was created in node.js.
 
 ## Available Scripts
 
