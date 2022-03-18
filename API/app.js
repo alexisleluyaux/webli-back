@@ -176,7 +176,7 @@ app.post(config.rootAPI + '/ddos', (req, res) => {
 
 app.post(config.rootAPI + '/urlextractor', (req, res) => {
   let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
-  let matchIpReggex = req.body.match(ValidIpAddressRegex)
+  let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
   let isAValidIpOrDomain = true
   if(matchDomainReggex === null && matchIpReggex === null){
     isAValidIpOrDomain= false
