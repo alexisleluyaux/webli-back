@@ -188,10 +188,10 @@ app.post(config.rootAPI + '/urlextractor', (req, res) => {
       isAnIpAdress = regexIpDetector.test(matchIpReggex)
     }
     if(isAnIpAdress){
-      ipOrDomain= matchIpReggex
+      ipOrDomain= matchIpReggex[0]
     }
     else{
-      ipOrDomain= matchDomainReggex
+      ipOrDomain= matchDomainReggex[0]
     }
   }
   else{
