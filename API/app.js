@@ -75,8 +75,30 @@ app.post(config.rootAPI + '/john', (req, res) => {
 //post nmap ip/domain
 
 app.post(config.rootAPI + '/nmap', (req, res) => {
-  console.log('Commande à executer: ', `nmap -T4 -A -v ${req.body.ipOrDomain}| awk '$1 ~ /^[0-9]/'`)
-      exec(`nmap -T4 -A -v ${req.body.ipOrDomain}| awk '$1 ~ /^[0-9]/'`, (error, stdout, stderr) => {
+  let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
+  let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
+  let isAValidIpOrDomain = true
+  let ipOrDomain = ''
+  if(matchDomainReggex === null && matchIpReggex === null){
+    isAValidIpOrDomain= false
+  }
+  if(isAValidIpOrDomain){
+    let isAnIpAdress = false
+    if(matchIpReggex!==null){
+      isAnIpAdress = regexIpDetector.test(matchIpReggex)
+    }
+    if(isAnIpAdress){
+      ipOrDomain= matchIpReggex[0]
+    }
+    else{
+      ipOrDomain= matchDomainReggex[0]
+    }
+  }
+  else{
+    res.send('Neither Ipv4 IP Adress or hostname detected.')
+  }
+  console.log('Commande à executer: ', `nmap -T4 -A -v ${ipOrDomain}| awk '$1 ~ /^[0-9]/'`)
+      exec(`nmap -T4 -A -v ${ipOrDomain}| awk '$1 ~ /^[0-9]/'`, (error, stdout, stderr) => {
         if (error) {
           console.log('Error: ', error.message)
           res.send(`error: ${error.message}`);
@@ -95,8 +117,30 @@ app.post(config.rootAPI + '/nmap', (req, res) => {
 //post sqlmap ip/domain
 
 app.post(config.rootAPI + '/sqlmap', (req, res) => {
-  console.log('Commande à executer: ', `sqlmap -u ${req.body.ipOrDomain}`)
-  exec(`sqlmap -u ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
+  let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
+  let isAValidIpOrDomain = true
+  let ipOrDomain = ''
+  if(matchDomainReggex === null && matchIpReggex === null){
+    isAValidIpOrDomain= false
+  }
+  if(isAValidIpOrDomain){
+    let isAnIpAdress = false
+    if(matchIpReggex!==null){
+      isAnIpAdress = regexIpDetector.test(matchIpReggex)
+    }
+    if(isAnIpAdress){
+      ipOrDomain= matchIpReggex[0]
+    }
+    else{
+      ipOrDomain= matchDomainReggex[0]
+    }
+  }
+  else{
+    res.send('Neither Ipv4 IP Adress or hostname detected.')
+  }
+  console.log('Commande à executer: ', `sqlmap -u ${ipOrDomain}`)
+  exec(`sqlmap -u ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
@@ -115,8 +159,30 @@ app.post(config.rootAPI + '/sqlmap', (req, res) => {
 //post dnsscan ip/domain
 
 app.post(config.rootAPI + '/dnsscan', (req, res) => {
-  console.log('Commande à executer: ', `dnsenum ${req.body.ipOrDomain}`)
-  exec(`dig ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
+  let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
+  let isAValidIpOrDomain = true
+  let ipOrDomain = ''
+  if(matchDomainReggex === null && matchIpReggex === null){
+    isAValidIpOrDomain= false
+  }
+  if(isAValidIpOrDomain){
+    let isAnIpAdress = false
+    if(matchIpReggex!==null){
+      isAnIpAdress = regexIpDetector.test(matchIpReggex)
+    }
+    if(isAnIpAdress){
+      ipOrDomain= matchIpReggex[0]
+    }
+    else{
+      ipOrDomain= matchDomainReggex[0]
+    }
+  }
+  else{
+    res.send('Neither Ipv4 IP Adress or hostname detected.')
+  }
+  console.log('Commande à executer: ', `dnsenum ${ipOrDomain}`)
+  exec(`dig ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
@@ -135,8 +201,30 @@ app.post(config.rootAPI + '/dnsscan', (req, res) => {
 //post wpscan ip/domain
 
 app.post(config.rootAPI + '/wpscan', (req, res) => {
-  console.log('Commande à executer: ', `wpscan --url ${req.body.ipOrDomain}`)
-  exec(`wpscan --url ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
+  let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
+  let isAValidIpOrDomain = true
+  let ipOrDomain = ''
+  if(matchDomainReggex === null && matchIpReggex === null){
+    isAValidIpOrDomain= false
+  }
+  if(isAValidIpOrDomain){
+    let isAnIpAdress = false
+    if(matchIpReggex!==null){
+      isAnIpAdress = regexIpDetector.test(matchIpReggex)
+    }
+    if(isAnIpAdress){
+      ipOrDomain= matchIpReggex[0]
+    }
+    else{
+      ipOrDomain= matchDomainReggex[0]
+    }
+  }
+  else{
+    res.send('Neither Ipv4 IP Adress or hostname detected.')
+  }
+  console.log('Commande à executer: ', `wpscan --url ${ipOrDomain}`)
+  exec(`wpscan --url ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
@@ -155,8 +243,31 @@ app.post(config.rootAPI + '/wpscan', (req, res) => {
 //post ddos ip/domain
 
 app.post(config.rootAPI + '/ddos', (req, res) => {
-  console.log('Commande à executer: ', `wpscan --url ${req.body.ipOrDomain}`)
-  exec(`hping3 -i u1 -S -p 80 -c ${req.body.numberOfPaquets} ${req.body.ipOrDomain}`, (error, stdout, stderr) => {
+  let numberOfPaquetsInt = parseInt(req.body.numberOfPaquets)
+  let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
+  let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
+  let isAValidIpOrDomain = true
+  let ipOrDomain = ''
+  if(matchDomainReggex === null && matchIpReggex === null){
+    isAValidIpOrDomain= false
+  }
+  if(isAValidIpOrDomain){
+    let isAnIpAdress = false
+    if(matchIpReggex!==null){
+      isAnIpAdress = regexIpDetector.test(matchIpReggex)
+    }
+    if(isAnIpAdress){
+      ipOrDomain= matchIpReggex[0]
+    }
+    else{
+      ipOrDomain= matchDomainReggex[0]
+    }
+  }
+  else{
+    res.send('Neither Ipv4 IP Adress or hostname detected.')
+  }
+  console.log('Commande à executer: ', `wpscan --url ${ipOrDomain}`)
+  exec(`hping3 -i u1 -S -p 80 -c ${numberOfPaquetsInt} ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
       res.send(`error: ${error.message}`);
@@ -197,7 +308,7 @@ app.post(config.rootAPI + '/urlextractor', (req, res) => {
   else{
     res.send('Neither Ipv4 IP Adress or hostname detected.')
   }
-  console.log('Commande à executer: ', `/URLextract/URLextractor/extractor.sh ${ipOrDomain}`)
+  console.log('Commande à executer: ', `cd /home/webli-back/URLextract/URLextractor/ ; ./extractor.sh ${ipOrDomain}`)
   exec(`cd /home/webli-back/URLextract/URLextractor/ ; ./extractor.sh ${ipOrDomain}`, (error, stdout, stderr) => {
     if (error) {
       console.log('Error: ', error.message)
