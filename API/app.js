@@ -178,6 +178,7 @@ app.post(config.rootAPI + '/urlextractor', (req, res) => {
   let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
   let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
   let isAValidIpOrDomain = true
+  let ipOrDomain = ''
   if(matchDomainReggex === null && matchIpReggex === null){
     isAValidIpOrDomain= false
   }
@@ -186,7 +187,6 @@ app.post(config.rootAPI + '/urlextractor', (req, res) => {
     if(matchIpReggex!==null){
       isAnIpAdress = regexIpDetector.test(matchIpReggex)
     }
-    let ipOrDomain = ''
     if(isAnIpAdress){
       ipOrDomain= matchIpReggex
     }
