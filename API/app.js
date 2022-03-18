@@ -180,6 +180,7 @@ app.post(config.rootAPI + '/dnsscan', (req, res) => {
   }
   else{
     res.send('Neither Ipv4 IP Adress or hostname detected.')
+    return;
   }
   console.log('Commande à executer: ', `dnsenum ${ipOrDomain}`)
   exec(`dig ${ipOrDomain}`, (error, stdout, stderr) => {
