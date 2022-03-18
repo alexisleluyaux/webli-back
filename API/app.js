@@ -244,7 +244,7 @@ app.post(config.rootAPI + '/wpscan', (req, res) => {
 //post ddos ip/domain
 
 app.post(config.rootAPI + '/ddos', (req, res) => {
-  let numberOfPaquetsInt = parseInt(req.body.numberOfPaquets)
+  let numberOfPaquetsInt = parseInt(req.body.numberOfPackets)
   console.log('INT PARSED: ', numberOfPaquetsInt)
   let matchDomainReggex = req.body.ipOrDomain.match(ValidHostnameRegex)
   let matchIpReggex = req.body.ipOrDomain.match(ValidIpAddressRegex)
